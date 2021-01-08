@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 app.get("/", function(req, res) {
   // Send the signup.html file when requested by root
-  res.sendFile(__dirname + "/signup.html");
+  res.sendFile(__dirname + "/public/signup.html");
 })
 
 app.post("/", function(req, res) {
@@ -49,10 +49,10 @@ app.post("/", function(req, res) {
       // Check the response code from Mailchimp server
       if (response.statusCode === 200) {
         // Return with the success.html file
-        res.sendFile(__dirname + "/success.html");
+        res.sendFile(__dirname + "/public/success.html");
       } else {
         // Return with the failure file
-        res.sendFile(__dirname + "/failure.html");
+        res.sendFile(__dirname + "/public/failure.html");
       }
       console.log(response.statusCode);
     })
