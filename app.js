@@ -2,8 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const https = require('https');
+const dotenv = require('dotenv').config()
 
 const app = express();
+
+// MailChimp API variables from config.env file (not included)
+const mc_list = process.env.MC_AUDIENCE;
+const mc_username = process.env.MC_LOGIN;
+const mc_password = process.env.MC_PASSKEY;
+const mc_server = process.env.MC_SERVER;
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -37,11 +44,14 @@ app.post("/", function(req, res) {
   const jsonData = JSON.stringify(data);
 
   // Mailchimp server data
-  const url = "https://us7.api.mailchimp.com/3.0/lists/70afd8f7e3";
+  const url = "https://us" + mc_server + ".api.mailchimp.com/3.0/lists/" + mc_list;
   const options = {
     method: "POST",
-    auth: "bclarkeuk:cefd1b3742901257bf6bb927c1a7a089-us7"
+    auth: mc_username + ":" + mc_password
   }
+
+  console.log(url);
+  console.log(options);
 
   // Compile the request
   const request = https.request(url, options, function(response) {
@@ -69,9 +79,6 @@ app.post("/failure", function(req, res) {
 });
 
 
-app.listen(8080, function() {
+app.listen(process.env.PORT || 8080, function() {
   console.log("Server listening on port 8080");
 });
-
-// API Key: cefd1b3742901257bf6bb927c1a7a089-us7
-// ListId: 70afd8f7e3
