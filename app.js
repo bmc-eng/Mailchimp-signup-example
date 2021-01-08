@@ -6,7 +6,8 @@ const dotenv = require('dotenv').config()
 
 const app = express();
 
-// MailChimp API variables from config.env file (not included)
+// MailChimp API variables from .env file These are needed by mailchimp as per API
+// documentation. 
 const mc_list = process.env.MC_AUDIENCE;
 const mc_username = process.env.MC_LOGIN;
 const mc_password = process.env.MC_PASSKEY;
